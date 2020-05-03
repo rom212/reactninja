@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>TEST 1</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        class MyC extends React.Component {
+
+            state = {
+                age : 20,
+                greeting: '',
+                history : []
+            }
+
+            mybuttonclick = () => {
+                console.log("button was clicked");
+                this.setState({age: this.state.age +=1 });
+            }
+
+            formfill = (e) => {
+                console.log(e.target.value);
+                this.setState({greeting : e.target.value})
+            }
+
+            formsubmitted = (e) => {
+                e.preventDefault();
+                let tempHist = this.state.history;
+                tempHist.push(this.state.greeting);
+                this.setState({history : tempHist});
+                console.log('history', this.state.history);
+            }
+
+            render () {
+                return (
+                    <div>
+                        <h1>Yo what'sup</h1>
+                        <p> {this.state.greeting} my name is {this.props.name} and I am {this.state.age}</p>
+                        <button onClick = {this.mybuttonclick}> My button</button>
+                        <form onSubmit = {this.formsubmitted}>
+                            <input type="text" onChange={this.formfill} />
+                            <button>Submit</button>
+                        </form>
+                        {this.state.history.map((txt,index) => <p key = {index}>{txt}</p>)}
+                    </div>
+                );
+            }
+        }
+        const mycomponent = document.getElementById('app');
+        ReactDOM.render(<MyC name="ro" />, mycomponent);
+
+    </script>
+</body>
+</html>
